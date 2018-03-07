@@ -11,6 +11,7 @@
     placeholder='password'
     v-model='password'/>
     <br>
+    <div v-html='error'></div>
     <button
     @click='register'
     >Register</button>
@@ -22,17 +23,22 @@ import AuthenticationService from '@/services/AuthenticationService'
 export default {
   data () {
     return {
-      email: 'abc',
-      password: '123'
+      email: 'sinumohammed',
+      password: '50525',
+      error: null
     }
   },
   methods: {
     async register () {
-      const Response = await AuthenticationService.register({
-        email: this.email,
-        password: this.password
-      })
-      console.log(Response.data)
+      try {
+        const Response = await AuthenticationService.register({
+          email: this.email,
+          password: this.password
+        })
+        console.log(Response.data)
+      } catch (error) {
+        this.error = error.response.data.error || error.response.data.message
+      }
     }
   }
   // watch: {
@@ -46,7 +52,6 @@ export default {
   //   }, 2000)
   // }
 }
-
 </script>
 
 <!-- Add 'scoped' attribute to limit CSS to this component only -->
