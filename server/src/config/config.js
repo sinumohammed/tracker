@@ -13,5 +13,8 @@ module.exports = {
       storage: './tracker.sqlite',
       operatorsAliases: Op
     }
+  },
+  authentication: {
+    jwtSecret: process.env.JWT_SECRET || 'secret'
   }
 }
