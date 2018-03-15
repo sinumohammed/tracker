@@ -1,5 +1,5 @@
 <template>
-  <v-layout-column>
+  <v-layout column>
     <v-flex xs6 offset-xs3>
       <div class='white elevation-2'>
         <v-toolbar flat dense class='cyan' dark>
@@ -25,7 +25,7 @@
     </div>
   </div>
   </v-flex>
-  </v-layout-column>
+  </v-layout>
 </template>
 
 <script>
@@ -33,19 +33,21 @@ import AuthenticationService from '@/services/AuthenticationService'
 export default {
   data () {
     return {
-      email: '',
-      password: '',
+      email: 'sinumohammed@gmail.com',
+      password: '12345678',
       error: null
     }
   },
   methods: {
     async login () {
       try {
-        const Response = await AuthenticationService.login({
+        const response = await AuthenticationService.login({
           email: this.email,
           password: this.password
         })
-        this.error = Response.data.message
+        console.log(response.data, 'resp')
+        this.$store.dispatch('setToken', response.data.token)
+        this.$store.dispatch('setUser', response.data.user)
       } catch (error) {
         this.error = error.response.data.error || error.response.data.message
       }

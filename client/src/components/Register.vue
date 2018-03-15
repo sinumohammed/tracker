@@ -1,5 +1,5 @@
 <template>
-  <v-layout-column>
+  <v-layout column>
     <v-flex xs6 offset-xs3>
       <div class='white elevation-2'>
         <v-toolbar flat dense class='cyan' dark>
@@ -30,12 +30,13 @@
     </div>
   </div>
   </v-flex>
-  </v-layout-column>
+  </v-layout>
 </template>
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
 export default {
+  name: 'Register',
   data () {
     return {
       email: 'sinumohammed',
@@ -46,11 +47,13 @@ export default {
   methods: {
     async register () {
       try {
-        const Response = await AuthenticationService.register({
+        const response = await AuthenticationService.register({
           email: this.email,
           password: this.password
         })
-        this.error = Response.data.message
+
+        this.$store.dispatch('setToken', response.token)
+        this.$store.dispatch('setUser', response.user)
       } catch (error) {
         this.error = error.response.data.error || error.response.data.message
       }
